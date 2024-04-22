@@ -168,6 +168,18 @@ text.set(FeatureIdent.WINDOWS_MANAGEMENT.toLowerCase(), {
   permissions: []
 })
 
+text.set(FeatureIdent.ENTITY_MANAGER.toLowerCase(), {
+  name: 'Entitiy Manager',
+  description: 'Define your own entities to manage',
+  permissions: []
+})
+text.set(FeatureIdent.API_MANAGER.toLowerCase(), {
+  name: 'API Manager',
+  description: 'Access to APIs',
+  permissions: []
+})
+
+
 
 watchEffect(() => {
     feature.value = route.params.feature as string

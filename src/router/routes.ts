@@ -3,7 +3,7 @@ import {RouteRecordRaw} from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/sidepanel/bookmarks'
+    redirect: '/sidepanel'
   },
   {
     path: '/sidepanel',
@@ -40,6 +40,17 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/FullPageLayout.vue'),
     children: [{path: '', component: () => import('pages/FeaturesPage.vue')}],
   },
+  {
+    path: '/sidepanel/entityManager',
+    component: () => import('layouts/SidePanelLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/SidePanelEntitiesPage.vue')}],
+  },
+  {
+    path: '/sidepanel/apiManager',
+    component: () => import('layouts/SidePanelLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/SidePanelApisPage.vue')}],
+  },
+
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

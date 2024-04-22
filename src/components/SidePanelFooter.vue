@@ -4,10 +4,6 @@
       class="q-pa-xs q-mt-sm darkInDarkMode brightInBrightMode" style="border-top: 1px solid lightgrey"
       :style="offsetBottom()">
 
-    <div class="row fit q-mb-sm" v-if="showWindowTable">
-      <!-- https://michaelnthiessen.com/force-re-render -->
-      <WindowsMarkupTable :rows="useWindowsStore().getWindowsForMarkupTable()" :key="randomKey"/>
-    </div>
 
     <div class="row fit">
       <div class="col-6">
@@ -34,8 +30,10 @@
           </q-linear-progress>
         </template>
 
-
-
+        <SidePanelFooterLeftButtons
+          @was-clicked="doShowSuggestionButton = true"
+          :size="getButtonSize()"
+          :show-suggestion-icon="false"/>
 
 
       </div>
@@ -77,6 +75,7 @@ import {ToastType} from "src/models/Toast";
 import {useNotificationHandler} from "src/services/ErrorHandler";
 import {FeatureIdent} from "src/models/AppFeature";
 import {usePermissionsStore} from "stores/permissionsStore";
+import SidePanelFooterLeftButtons from "components/helper/SidePanelFooterLeftButtons.vue";
 
 const {handleSuccess, handleError} = useNotificationHandler()
 
