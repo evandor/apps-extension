@@ -2,9 +2,6 @@ import Command from "src/domain/Command";
 import {ExecutionResult} from "src/domain/ExecutionResult";
 import {usePermissionsStore} from "src/stores/permissionsStore";
 import {GrantPermissionCommand} from "src/domain/commands/GrantPermissionCommand";
-import {useBookmarksStore} from "src/bookmarks/stores/bookmarksStore";
-import ChromeBookmarkListeners from "src/services/ChromeBookmarkListeners";
-// import TabsetService from "src/services/TabsetService";
 
 class UndoCommand implements Command<boolean> {
 
@@ -25,20 +22,6 @@ export class RevokePermissionCommand implements Command<boolean> {
   }
 
   async execute(): Promise<ExecutionResult<boolean>> {
-    if ("bookmarks" === this.permission) {
-      useBookmarksStore().loadBookmarks()
-        .then(() => {
-          ChromeBookmarkListeners.removeListeners()
-          useBookmarksStore().bookmarksLeaves = []
-          // TabsetService.init()
-        })
-        .catch ((err) => {
-          console.info("dealing with error: " + err)
-          ChromeBookmarkListeners.removeListeners()
-          useBookmarksStore().bookmarksLeaves = []
-          // TabsetService.init()
-        })
-    }
     usePermissionsStore().deactivateFeature(this.permission)
     return usePermissionsStore().revokePermission(this.permission)
       .then(() => {

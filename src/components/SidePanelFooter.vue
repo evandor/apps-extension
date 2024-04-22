@@ -34,36 +34,14 @@
           </q-linear-progress>
         </template>
 
-        <q-btn v-if="!checkToasts() && !transitionGraceTime && showSuggestionButton"
-               outline
-               icon="o_lightbulb"
-               :label="suggestionsLabel()"
-               :color="dependingOnStates()"
-               :size="getButtonSize()"
-               @click="suggestionDialog()"
-               class="q-ma-none q-pa-xs q-ml-sm q-mt-xs q-pr-md cursor-pointer">
-        </q-btn>
 
-        <template v-if="!checkToasts() && !transitionGraceTime && !showSuggestionButton">
 
-          <!--          <SidePanelFooterLeftButtons-->
-          <!--            @was-clicked="doShowSuggestionButton = true"-->
-          <!--            :size="getButtonSize()"-->
-          <!--            :show-suggestion-icon="showSuggestionIcon"/>-->
-        </template>
+
 
       </div>
       <div class="col text-right">
 
-        <q-btn v-if="(usePermissionsStore().hasFeature(FeatureIdent.WINDOWS_MANAGEMENT))"
-            icon="o_grid_view"
-            data-testid="buttonManageWindows"
-            :class="rightButtonClass()"
-            flat
-            :size="getButtonSize()"
-            @click="toggleShowWindowTable()">
-          <q-tooltip class="tooltip" anchor="top left" self="bottom left">Manage Windows</q-tooltip>
-        </q-btn>
+
 
         <q-btn icon="o_settings"
                class="q-my-xs q-px-xs q-mr-none"
@@ -94,16 +72,9 @@ import {onMounted, ref, watch, watchEffect} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import NavigationService from "src/services/NavigationService";
 import {openURL, uid, useQuasar} from "quasar";
-import {useSuggestionsStore} from "stores/suggestionsStore";
 import _ from "lodash";
-import {SuggestionState} from "src/models/Suggestion";
-import SuggestionDialog from "components/dialogues/SuggestionDialog.vue";
 import {ToastType} from "src/models/Toast";
 import {useNotificationHandler} from "src/services/ErrorHandler";
-import WindowsMarkupTable from "src/windows/components/WindowsMarkupTable.vue";
-import {WindowAction, WindowHolder} from "src/windows/models/WindowHolder"
-import {Window} from "src/windows/models/Window"
-import {useWindowsStore} from "src/windows/stores/windowsStore";
 import {FeatureIdent} from "src/models/AppFeature";
 import {usePermissionsStore} from "stores/permissionsStore";
 
@@ -123,9 +94,6 @@ const randomKey = ref<string>(uid())
 const progressValue = ref<number>(0.0)
 const progressLabel = ref<string>('')
 const animateSettingsButton = ref<boolean>(false)
-const windowRows = ref<WindowHolder[]>([])
-const tabsetsMangedWindows = ref<object[]>([])
-const windowsToOpenOptions = ref<object[]>([])
 
 onMounted(() => {
   if (usePermissionsStore().hasFeature(FeatureIdent.WINDOWS_MANAGEMENT)) {
@@ -141,35 +109,7 @@ watchEffect(() => {
   animateSettingsButton.value = useUiStore().animateSettingsButton
 })
 
-const updateWindows = () => {
-  useWindowsStore().setup('got window-updated message', true)
-      .then(() => windowRows.value = calcWindowRows())
-}
 
-watch(() => useWindowsStore().currentChromeWindows, (newWindows, oldWindows) => {
-  //console.log("windows changed", newWindows, oldWindows)
-  windowRows.value = calcWindowRows()
-})
-
-//console.log("====>: chrome.runtime.onMessage.hasListeners(windowsUpdatedListener)", chrome.runtime.onMessage.hasListener(windowsUpdatedListener))
-//chrome.runtime.onMessage.addListener(windowsUpdatedListener)
-chrome.windows.onCreated.addListener((w: chrome.windows.Window) => updateWindows())
-chrome.windows.onRemoved.addListener((wId: number) => updateWindows())
-
-chrome.tabs.onRemoved.addListener((tabId: number, removeInfo: chrome.tabs.TabRemoveInfo) => {
-  //console.log("***here we are", tabId, removeInfo)
-  useWindowsStore().setup('got window-updated message')
-      .then(() => windowRows.value = calcWindowRows())
-      .catch((err) => handleError(err))
-})
-
-
-// chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
-//   //console.log("***here we are3", tab)
-//   useWindowsStore().setup('got window-updated message')
-//       .then(() => windowRows.value = calcWindowRows())
-//       .catch((err) => handleError(err))
-// })
 
 const openOptionsPage = () => {
   ($q.platform.is.cordova || $q.platform.is.capacitor) ?
@@ -184,27 +124,7 @@ const settingsTooltip = () => {
 
 const rightButtonClass = () => "q-my-xs q-px-xs q-mr-none"
 
-const dependingOnStates = () =>
-    _.find(useSuggestionsStore().getSuggestions([SuggestionState.NEW, SuggestionState.DECISION_DELAYED]), s => s.state === SuggestionState.NEW) ? 'warning' : 'primary'
 
-const suggestionDialog = () => {
-  doShowSuggestionButton.value = false
-  $q.dialog({
-    component: SuggestionDialog, componentProps: {
-      suggestion: useSuggestionsStore()
-          .getSuggestions([SuggestionState.NEW, SuggestionState.DECISION_DELAYED, SuggestionState.NOTIFICATION]).at(0),
-      fromPanel: true
-    }
-  })
-}
-const suggestionsLabel = () => {
-  const suggestions = useSuggestionsStore().getSuggestions(
-      [SuggestionState.NEW, SuggestionState.DECISION_DELAYED, SuggestionState.NOTIFICATION])
-  return suggestions.length === 1 ?
-      suggestions.length + " New Suggestion" :
-      suggestions.length + " New Suggestions"
-
-}
 
 const checkToasts = () => {
   if (useUiStore().toasts.length > 0) {
@@ -242,37 +162,6 @@ const toastBannerClass = () => {
     default:
       return "bg-negative" + defaults
   }
-}
-
-const toggleShowWindowTable = () => {
-  showWindowTable.value = !showWindowTable.value
-  if (showWindowTable.value) {
-    randomKey.value = uid()
-    //showStatsTable.value = false
-  }
-  const windowId = useWindowsStore().currentChromeWindow?.id || 0
-  const currentWindow: Window | undefined = useWindowsStore().windowForId(windowId)
-  if (currentWindow) {
-    currentWindow.open = showWindowTable.value
-    useWindowsStore().upsertTabsetWindow(currentWindow)
-  }
-}
-
-const calcWindowRows = (): WindowHolder[] => {
-  const result = _.map(useWindowsStore().currentChromeWindows as chrome.windows.Window[], (cw: chrome.windows.Window) => {
-    const windowFromStore: Window | undefined = useWindowsStore().windowForId(cw.id || -2)
-    const windowName = useWindowsStore().windowNameFor(cw.id || 0) || cw.id!.toString()
-    const additionalActions: WindowAction[] = []
-
-    return WindowHolder.of(
-        cw,
-        windowFromStore?.index || 0,
-        windowName,
-        windowFromStore?.hostList || [],
-        additionalActions)
-  })
-
-  return _.sortBy(result, "index")
 }
 
 const offsetBottom = () => ($q.platform.is.capacitor || $q.platform.is.cordova) ? 'margin-bottom:20px;' : ''

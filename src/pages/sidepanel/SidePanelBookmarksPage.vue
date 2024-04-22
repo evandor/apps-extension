@@ -7,11 +7,7 @@
         <div class="row q-ma-none q-pa-none">
           <div class="col-12 q-ma-none q-pa-none q-pt-md">
 
-            <BookmarksTree
-              :nodes="showOnlyFolders ? useBookmarksStore().nonLeafNodes : useBookmarksStore().bookmarksNodes2"
-              :show-only-folders="showOnlyFolders"
-              @toggle-show-only-folders="toggleShowOnlyFolders()"
-              :in-side-panel="true"/>
+
 
           </div>
         </div>
@@ -36,8 +32,6 @@
 import FirstToolbarHelper from "pages/sidepanel/helper/FirstToolbarHelper.vue";
 import {onMounted, ref} from "vue";
 import Analytics from "src/utils/google-analytics";
-import BookmarksTree from "src/bookmarks/components/BookmarksTree.vue";
-import {useBookmarksStore} from "src/bookmarks/stores/bookmarksStore";
 import {usePermissionsStore} from "stores/permissionsStore";
 
 const showOnlyFolders = ref(true)

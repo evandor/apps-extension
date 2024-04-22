@@ -2,8 +2,6 @@ import Command from "src/domain/Command";
 import {ExecutionResult} from "src/domain/ExecutionResult";
 import {usePermissionsStore} from "src/stores/permissionsStore";
 import {RevokePermissionCommand} from "src/domain/commands/RevokePermissionCommand";
-import {useBookmarksStore} from "src/bookmarks/stores/bookmarksStore";
-import ChromeBookmarkListeners from "src/services/ChromeBookmarkListeners";
 import {useSuggestionsStore} from "src/stores/suggestionsStore";
 import {StaticSuggestionIdent} from "src/models/Suggestion";
 import {useDB} from "src/services/usePersistenceService";
@@ -33,11 +31,7 @@ export class GrantPermissionCommand implements Command<boolean> {
           console.log("granted permission", this.permission)
           if ("bookmarks" === this.permission) {
             usePermissionsStore().activateFeature('bookmarks')
-            useBookmarksStore().loadBookmarks()
-              .then(() => {
-                // TabsetService.init()
-                ChromeBookmarkListeners.initListeners()
-              })
+
             useSuggestionsStore().removeSuggestion(StaticSuggestionIdent.TRY_BOOKMARKS_FEATURE)
           } else if ("notifications" === this.permission) {
             usePermissionsStore().activateFeature('notifications')

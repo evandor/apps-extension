@@ -1,35 +1,6 @@
 <template>
 
-  <BookmarksPage :in-side-panel="true">
-
-    <template v-slot:actions>
-      <!--      <q-btn v-if="nonFolders().length > 0"-->
-      <!--             flat dense icon="upload_file"-->
-      <!--             color="primary" :label="$q.screen.gt.lg ? 'Import as Tabset...' : ''"-->
-      <!--             class="q-mr-sm"-->
-      <!--             @click="importBookmarks">-->
-      <!--        <q-tooltip>Import these bookmarks as Tabset</q-tooltip>-->
-      <!--      </q-btn>-->
-
-      <q-btn
-          flat dense icon="o_add"
-          color="primary" :label="$q.screen.gt.lg ? 'Add Folder...' : ''"
-          class="q-mr-md"
-          @click="addUrlDialog">
-        <q-tooltip>Create a new Bookmark Folder</q-tooltip>
-      </q-btn>
-
-      <q-btn
-          flat dense icon="delete_outline"
-          color="negative" :label="$q.screen.gt.lg ? 'Delete Folder...' : ''"
-          class="q-mr-md"
-          @click="deleteBookmarkFolder">
-        <q-tooltip>Delete this Bookmark Folder</q-tooltip>
-      </q-btn>
-
-    </template>
-
-  </BookmarksPage>
+***
 
 </template>
 
@@ -38,14 +9,10 @@
 import BookmarksPage from "src/bookmarks/pages/BookmarksPage.vue";
 import {onMounted, ref, watchEffect} from "vue";
 import Analytics from "src/utils/google-analytics";
-import AddBookmarkFolderDialog from "src/bookmarks/dialogues/AddBookmarkFolderDialog.vue";
 import {uid, useQuasar} from "quasar";
-import {useBookmarksStore} from "src/bookmarks/stores/bookmarksStore";
-import BookmarksService from "src/bookmarks/services/BookmarksService";
 import {useRoute, useRouter} from "vue-router";
 
 const $q = useQuasar()
-const bookmarksStore = useBookmarksStore()
 const router = useRouter()
 const route = useRoute()
 
@@ -60,10 +27,6 @@ watchEffect(() => {
   bookmarkId.value = route.params.id as string
 })
 
-const addUrlDialog = () => $q.dialog({
-  component: AddBookmarkFolderDialog,
-  componentProps: {parentFolderId: bookmarkId.value}
-})
 
 // const importBookmarks = () => $q.dialog({
 //   component: ImportFromBookmarksDialog,

@@ -1,19 +1,13 @@
 import {usePermissionsStore} from "stores/permissionsStore";
 import ChromeListeners from "src/services/ChromeListeners";
-import ChromeBookmarkListeners from "src/services/ChromeBookmarkListeners";
-import BookmarksService from "src/bookmarks/services/BookmarksService";
 import IndexedDbPersistenceService from "src/services/IndexedDbPersistenceService";
 import {useDB} from "src/services/usePersistenceService";
-import {useSuggestionsStore} from "stores/suggestionsStore";
 import ChromeApi from "src/services/ChromeApi";
 import {useSettingsStore} from "stores/settingsStore";
-import {useBookmarksStore} from "src/bookmarks/stores/bookmarksStore";
 import {Router} from "vue-router";
 import {useAppStore} from "stores/appStore";
 import PersistenceService from "src/services/PersistenceService";
 import {useUiStore} from "stores/uiStore";
-import {useWindowsStore} from "src/windows/stores/windowsStore";
-import {FeatureIdent} from "src/models/AppFeature";
 
 class AppService {
 
@@ -37,7 +31,6 @@ class AppService {
 
     const appStore = useAppStore()
     const settingsStore = useSettingsStore()
-    const bookmarksStore = useBookmarksStore()
     const uiStore = useUiStore()
     this.router = router
 
@@ -49,17 +42,13 @@ class AppService {
     await usePermissionsStore().initialize(useDB(quasar).localDb)
     await ChromeListeners.initListeners()
 
-    ChromeBookmarkListeners.initListeners()
-    await bookmarksStore.init()
-    await BookmarksService.init()
-
     settingsStore.initialize(quasar.localStorage);
 
     // init db
     await IndexedDbPersistenceService.init("db")
 
     // init services
-    useSuggestionsStore().init(useDB(undefined).db)
+    // useSuggestionsStore().init(useDB(undefined).db)
 
     await this.initCoreSerivces(quasar, useDB(undefined).db, this.router)
 
@@ -68,10 +57,6 @@ class AppService {
   private async initCoreSerivces(quasar: any, store: PersistenceService, router: Router) {
     ChromeApi.init(router)
 
-    if (usePermissionsStore().hasFeature(FeatureIdent.WINDOWS_MANAGEMENT)) {
-      await useWindowsStore().initialize()
-      useWindowsStore().initListeners()
-    }
 
     useUiStore().appLoading = undefined
   }

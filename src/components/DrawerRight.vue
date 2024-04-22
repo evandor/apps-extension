@@ -79,9 +79,6 @@ import {ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 import {DrawerTabs, useUiStore} from "src/stores/uiStore";
 import Features from "components/Features.vue";
-import TabsetHelp from "components/TabsetHelp.vue";
-import BookmarksTree from "src/bookmarks/components/BookmarksTree.vue";
-import {useBookmarksStore} from "src/bookmarks/stores/bookmarksStore";
 
 const route = useRoute()
 
@@ -98,40 +95,8 @@ watchEffect(() => tab.value = useUiStore().rightDrawer.activeTab)
 
 const drawerLabel = () => {
   switch (tab.value) {
-    case DrawerTabs.BOOKMARKS:
-      return "Bookmarks"
-    case DrawerTabs.OPEN_TABS:
-      return "Open Tabs"
-    case DrawerTabs.UNASSIGNED_TABS:
-      return "Tabs to add"
-    case DrawerTabs.GROUP_BY_HOST_TABS:
-      return "Grouped by Host"
-    case DrawerTabs.SAVED_TABS:
-      return "Saved Pages"
-    case DrawerTabs.SAVED_TABS_AS_PDF:
-      return "Saved PDFs"
-    case DrawerTabs.SAVED_TABS_AS_PNG:
-      return "Saved Images"
-    case DrawerTabs.RSS:
-      return "RSS Sidebar"
-    case DrawerTabs.SCHEDULED:
-      return "Scheduled"
-    case DrawerTabs.HISTORY:
-      return "History"
     case DrawerTabs.FEATURES:
       return "Additional Features"
-    case DrawerTabs.TAB_DETAILS:
-      return "Tab Details"
-    case DrawerTabs.TABSET_DETAILS:
-      return "Tabset Details"
-    case DrawerTabs.NEW_TAB_URLS:
-      return "Urls on New Tab Page"
-    case DrawerTabs.HELP:
-      return "Help"
-    case DrawerTabs.TAGS_VIEWER:
-      return "Tags Viewer"
-    case DrawerTabs.TAG_VIEWER:
-      return "Tag Viewer"
     default:
       return tab.value
   }
