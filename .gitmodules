@@ -1,0 +1,4 @@
+[submodule "src/apps"]
+	path = src/apps
+	url = https://github.com/evandor/submodule-apps.git
+	branch = main
