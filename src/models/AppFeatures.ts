@@ -1,24 +1,24 @@
 import _ from "lodash"
-import {AppFeature, FeatureIdent, FeatureType} from "src/models/AppFeature"
+import {Feature} from "src/features/models/Feature";
+import {FeatureIdent, FeatureType} from "src/models/FeatureIdent";
 
 export class AppFeatures {
-  features: AppFeature[] = [
-    //new AppFeature(FeatureIdent.WINDOWS_MANAGEMENT, FeatureType.RECOMMENDED, 'Windows Management', 'grid_view', ['bex']),
-    new AppFeature(FeatureIdent.ENTITY_MANAGER, FeatureType.EXPERIMENTAL, 'Entity Management', 'o_apps', ['all']),
-    new AppFeature(FeatureIdent.API_MANAGER, FeatureType.EXPERIMENTAL, 'API Management', 'o_apps', ['all'])
+  features: Feature[] = [
 
+    new Feature(FeatureIdent.DEV_MODE, FeatureType.INTERNAL, "Developer Mode",
+      "A feature toggle to switch between dev mode on/off", "", "", ['all']),
 
   ]
 
-  getFeature(f: FeatureIdent): AppFeature | undefined {
-    const found = _.filter(this.features, (feature: AppFeature) => feature.ident === f)
+  getFeature(f: FeatureIdent): Feature | undefined {
+    const found = _.filter(this.features, (feature: Feature) => feature.ident === f)
     if (found && found.length > 0) {
       return found[0]
     }
     return undefined
   }
 
-  getFeatures(): AppFeature[] {
+  getFeatures(): Feature[] {
     return this.features
   }
 }

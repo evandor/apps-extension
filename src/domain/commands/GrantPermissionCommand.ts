@@ -1,10 +1,10 @@
-import Command from "src/domain/Command";
-import {ExecutionResult} from "src/domain/ExecutionResult";
+import Command from "src/core/domain/Command";
+import {ExecutionResult} from "src/core/domain/ExecutionResult";
 import {usePermissionsStore} from "src/stores/permissionsStore";
 import {RevokePermissionCommand} from "src/domain/commands/RevokePermissionCommand";
 import {useSuggestionsStore} from "src/stores/suggestionsStore";
 import {StaticSuggestionIdent} from "src/models/Suggestion";
-import {useDB} from "src/services/usePersistenceService";
+import {useFeaturesStore} from "src/features/stores/featuresStore";
 
 class UndoCommand implements Command<boolean> {
 
@@ -30,11 +30,11 @@ export class GrantPermissionCommand implements Command<boolean> {
         if (granted) {
           console.log("granted permission", this.permission)
           if ("bookmarks" === this.permission) {
-            usePermissionsStore().activateFeature('bookmarks')
+            useFeaturesStore().activateFeature('bookmarks')
 
             useSuggestionsStore().removeSuggestion(StaticSuggestionIdent.TRY_BOOKMARKS_FEATURE)
           } else if ("notifications" === this.permission) {
-            usePermissionsStore().activateFeature('notifications')
+            useFeaturesStore().activateFeature('notifications')
           }
           return new ExecutionResult(
             granted,
@@ -42,7 +42,7 @@ export class GrantPermissionCommand implements Command<boolean> {
             new UndoCommand(this.permission))
         } else {
           console.log("permission was not granted", this.permission)
-          usePermissionsStore().deactivateFeature(this.permission)
+          useFeaturesStore().deactivateFeature(this.permission)
           return new ExecutionResult(granted, "Permission was not added")
         }
       })

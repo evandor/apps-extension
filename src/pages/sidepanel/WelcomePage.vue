@@ -106,16 +106,17 @@
 import {SidePanelView, useUiStore} from "src/stores/uiStore";
 import {onMounted, ref, UnwrapRef, watchEffect} from "vue";
 import {useRouter} from "vue-router";
-import {useCommandExecutor} from "src/services/CommandExecutor";
+import {useCommandExecutor} from "src/core/services/CommandExecutor";
 import {STRIP_CHARS_IN_USER_INPUT, TITLE_IDENT} from "boot/constants";
 import Analytics from "src/utils/google-analytics";
 import DialogButton from "components/buttons/DialogButton.vue";
 import {LocalStorage, openURL} from "quasar";
-import {FeatureIdent} from "src/models/AppFeature";
 import {AppFeatures} from "src/models/AppFeatures";
 import {GrantPermissionCommand} from "src/domain/commands/GrantPermissionCommand";
 import {usePermissionsStore} from "stores/permissionsStore";
 import {useI18n} from 'vue-i18n'
+import {FeatureIdent} from "src/models/FeatureIdent";
+import {useFeaturesStore} from "src/features/stores/featuresStore";
 
 const {t} = useI18n()
 const router = useRouter()
@@ -143,7 +144,7 @@ watchEffect(async () => {
       activateNotifications.value = false
     }
   } else if (!activateNotifications.value && feature) {
-    usePermissionsStore().deactivateFeature('notifications')
+    useFeaturesStore().deactivateFeature('notifications')
   }
 })
 
@@ -152,10 +153,10 @@ function setFeature(featureIdent: FeatureIdent, val: UnwrapRef<boolean>) {
   console.log("feeature", feature)
   if (val && feature) {
     console.log("activating", featureIdent)
-    usePermissionsStore().activateFeature(featureIdent.toLowerCase())
+    useFeaturesStore().activateFeature(featureIdent.toLowerCase())
   } else if (!val && feature) {
     console.log("deactivateing", featureIdent)
-    usePermissionsStore().deactivateFeature(featureIdent.toLowerCase())
+    useFeaturesStore().deactivateFeature(featureIdent.toLowerCase())
   }
 }
 
@@ -166,16 +167,6 @@ watchEffect(async () => {
 watchEffect(() => {
   useUiStore().showLoginTable = login.value
 })
-
-
-const addFirstTabset = () => {
-  useCommandExecutor()
-    .executeFromUi(new CreateTabsetCommand(tabsetName.value, []))
-    .then((res) => {
-      useUiStore().sidePanelSetActiveView(SidePanelView.MAIN)
-      router.push("/sidepanel?first=true")
-    })
-}
 
 const newTabsetNameIsValid = () =>
   tabsetName.value.length <= 32 && !STRIP_CHARS_IN_USER_INPUT.test(tabsetName.value)
@@ -189,11 +180,6 @@ const clicked = (url: string) => openURL(url)
 
 const firebaseActive = () => {
   return process.env.USE_FIREBASE && process.env.USE_FIREBASE == "true"
-}
-
-const openBookmarksView = () => {
-  useUiStore().sidePanelSetActiveView(SidePanelView.BOOKMARKS)
-  router.push("/sidepanel/" + SidePanelView.BOOKMARKS)
 }
 
 </script>

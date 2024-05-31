@@ -70,15 +70,10 @@ import {onMounted, ref, watch, watchEffect} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import NavigationService from "src/services/NavigationService";
 import {openURL, uid, useQuasar} from "quasar";
-import _ from "lodash";
 import {ToastType} from "src/models/Toast";
-import {useNotificationHandler} from "src/services/ErrorHandler";
-import {FeatureIdent} from "src/models/AppFeature";
-import {usePermissionsStore} from "stores/permissionsStore";
 import SidePanelFooterLeftButtons from "components/helper/SidePanelFooterLeftButtons.vue";
-
-const {handleSuccess, handleError} = useNotificationHandler()
-
+import {useFeaturesStore} from "src/features/stores/featuresStore";
+import {FeatureIdent} from "src/models/FeatureIdent";
 
 const $q = useQuasar()
 
@@ -95,7 +90,7 @@ const progressLabel = ref<string>('')
 const animateSettingsButton = ref<boolean>(false)
 
 onMounted(() => {
-  if (usePermissionsStore().hasFeature(FeatureIdent.WINDOWS_MANAGEMENT)) {
+  if (useFeaturesStore().hasFeature(FeatureIdent.WINDOWS_MANAGEMENT)) {
     windowRows.value = calcWindowRows()
   }
 })

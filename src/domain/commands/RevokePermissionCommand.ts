@@ -1,5 +1,5 @@
-import Command from "src/domain/Command";
-import {ExecutionResult} from "src/domain/ExecutionResult";
+import Command from "src/core/domain/Command";
+import {ExecutionResult} from "src/core/domain/ExecutionResult";
 import {usePermissionsStore} from "src/stores/permissionsStore";
 import {GrantPermissionCommand} from "src/domain/commands/GrantPermissionCommand";
 
@@ -22,7 +22,7 @@ export class RevokePermissionCommand implements Command<boolean> {
   }
 
   async execute(): Promise<ExecutionResult<boolean>> {
-    usePermissionsStore().deactivateFeature(this.permission)
+    useFeaturesStore().deactivateFeature(this.permission)
     return usePermissionsStore().revokePermission(this.permission)
       .then(() => {
 

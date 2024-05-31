@@ -41,19 +41,6 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable @click="useUiStore().startButtonAnimation('bookmarks')">
-              <q-item-section avatar>
-                <SidePanelToolbarButton
-                  icon="bookmark"
-                  color="primary"/>
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>Bookmarks Manager</q-item-label>
-                <q-item-label caption>Click to open the Bookmarks Manager</q-item-label>
-              </q-item-section>
-            </q-item>
-
           </q-list>
         </div>
       </div>
@@ -108,14 +95,11 @@
 
 import {onMounted, onUnmounted, ref, watchEffect} from "vue";
 import {useRouter} from "vue-router";
-import {useUtils} from "src/services/Utils";
-import {LocalStorage, scroll} from "quasar";
+import {useUtils} from "src/core/services/Utils";
 import {useUiStore} from "src/stores/uiStore";
 import {usePermissionsStore} from "src/stores/permissionsStore";
 import FirstToolbarHelper from "pages/sidepanel/helper/FirstToolbarHelper.vue";
 import Analytics from "src/utils/google-analytics";
-import {TITLE_IDENT} from "boot/constants";
-import AppService from "src/services/AppService";
 import SidePanelToolbarButton from "components/buttons/SidePanelToolbarButton.vue";
 import {useI18n} from 'vue-i18n'
 

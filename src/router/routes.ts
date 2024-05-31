@@ -16,11 +16,6 @@ const routes: RouteRecordRaw[] = [
     children: [{path: '', component: () => import('pages/sidepanel/WelcomePage.vue')}],
   },
   {
-    path: '/sidepanel/bookmarks',
-    component: () => import('layouts/SidePanelLayout.vue'),
-    children: [{path: '', component: () => import('pages/sidepanel/SidePanelBookmarksPage.vue')}],
-  },
-  {
     path: '/mainpanel/settings',
     component: () => import('layouts/PlainWithRightDrawerLayout.vue'),
     children: [{path: '', component: () => import('pages/SettingsPage.vue')}],
@@ -28,17 +23,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/mainpanel/features/:feature',
     component: () => import('layouts/PlainWithRightDrawerLayout.vue'),
-    children: [{path: '', component: () => import('pages/FeaturesPage.vue')}],
-  },
-  {
-    path: '/mainpanel/bookmarks/:id',
-    component: () => import('layouts/PlainLayout.vue'),
-    children: [{path: '', component: () => import('pages/mainpanel/MainPanelBookmarksPage.vue')}],
+    children: [{path: '', component: () => import('src/features/pages/FeaturesPage.vue')}],
   },
   {
     path: '/features/:feature',
     component: () => import('layouts/FullPageLayout.vue'),
-    children: [{path: '', component: () => import('pages/FeaturesPage.vue')}],
+    children: [{path: '', component: () => import('src/features/pages/FeaturesPage.vue')}],
   },
   {
     path: '/sidepanel/entityManager',
@@ -50,7 +40,42 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/SidePanelLayout.vue'),
     children: [{path: '', component: () => import('src/apps/pages/SidePanelApisPage.vue')}],
   },
+  {
+    path: '/mainpanel/entities/:entityId', // editorjs setup cannot toggle between readonly/write mode
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelEntityPage.vue')}],
+  },
+  {
+    path: '/mainpanel/entities/:entityId/items',
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelEntityItemPage.vue')}],
+  },
+  {
+    path: '/mainpanel/entities/:entityId',
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelEntityPage.vue')}],
+  },
+  {
+    path: '/mainpanel/entities/:entityId/items/:itemId',
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelEntityItemPage.vue')}],
+  },
 
+  {
+    path: '/mainpanel/apis/:apiId', // editorjs setup cannot toggle between readonly/write mode
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelApiPage.vue')}],
+  },
+  {
+    path: '/mainpanel/apis/:apiId/endpoints',
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelApiEndpointPage.vue')}],
+  },
+  {
+    path: '/mainpanel/apis/:apiId/endpoints/:endpointId',
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelApiEndpointPage.vue')}],
+  },
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

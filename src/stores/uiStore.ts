@@ -3,10 +3,10 @@ import {computed, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import _ from "lodash"
 import {LocalStorage, useQuasar} from "quasar";
-import {useUtils} from "src/services/Utils";
-import {FeatureIdent} from "src/models/AppFeature";
-import {usePermissionsStore} from "stores/permissionsStore";
+import {useUtils} from "src/core/services/Utils";
 import {Toast, ToastType} from "src/models/Toast";
+import {useFeaturesStore} from "src/features/stores/featuresStore";
+import {FeatureIdent} from "src/models/FeatureIdent";
 
 export enum DrawerTabs {
   FEATURES = "features",
@@ -23,9 +23,6 @@ export class SidePanelView {
 
   static readonly TAG = new SidePanelView('tag', '/sidepanel/tags');
 
-  static readonly SHARED_TABSETS_LIST = new SidePanelView('sharedTsList', '/sidepanel/sharedTsList',
-    () => usePermissionsStore().hasFeature(FeatureIdent.TABSETS_SHARING));
-
   static readonly NEWEST_TABS_LIST = new SidePanelView('newestList', '/sidepanel/newestList');
 
   static readonly BOOKMARKS = new SidePanelView('bookmarks', '/sidepanel/bookmarks',
@@ -38,11 +35,9 @@ export class SidePanelView {
 
   static readonly TABS_AS_TREE = new SidePanelView('tabsAsTree', '/sidepanel/tabsAsTree')
 
-  static readonly ENTITY_MANAGER = new SidePanelView('entityManager', '/sidepanel/entities',
-    () => usePermissionsStore().hasFeature(FeatureIdent.ENTITY_MANAGER))
+  static readonly ENTITY_MANAGER = new SidePanelView('entityManager', '/sidepanel/entities')
 
-  static readonly API_MANAGER = new SidePanelView('apiManager', '/sidepanel/apis',
-    () => usePermissionsStore().hasFeature(FeatureIdent.API_MANAGER))
+  static readonly API_MANAGER = new SidePanelView('apiManager', '/sidepanel/apis')
 
 
 

@@ -16,7 +16,7 @@
 
     <!-- place QPageSticky at end of page -->
     <q-page-sticky expand position="top" class="darkInDarkMode brightInBrightMode">
-      <FirstToolbarHelper title="Bookmrkx Sidepanel">
+      <FirstToolbarHelper title="Apps Sidepanel">
 
         <template v-slot:iconsRight>&nbsp;</template>
 

@@ -8,6 +8,9 @@ import {Router} from "vue-router";
 import {useAppStore} from "stores/appStore";
 import PersistenceService from "src/services/PersistenceService";
 import {useUiStore} from "stores/uiStore";
+import {useFeaturesStore} from "src/features/stores/featuresStore";
+import {useEntitiesStore} from "src/apps/stores/entitiesStore";
+import {useApisStore} from "src/apps/stores/apisStore";
 
 class AppService {
 
@@ -57,6 +60,14 @@ class AppService {
   private async initCoreSerivces(quasar: any, store: PersistenceService, router: Router) {
     ChromeApi.init(router)
 
+    /**
+     * features store: passing storage for better testing.
+     * make sure features are not used before this line in code.
+     */
+    await useFeaturesStore().initialize(useDB(quasar).featuresLocalStorage)
+
+    await useEntitiesStore().initialize(useDB().indexedDbAppsPersistence)
+    await useApisStore().initialize(useDB().indexedDbAppsPersistence)
 
     useUiStore().appLoading = undefined
   }
