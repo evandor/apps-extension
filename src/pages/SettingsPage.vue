@@ -21,6 +21,8 @@
             no-caps>
       <q-tab name="appearance" label="Appearance"/>
 <!--      <q-tab name="thirdparty" label="Third Party Services"/>-->
+      <q-tab name="importExport" label="Import/Export"/>
+
       <q-tab name="featureToggles" label="Feature Toggles"/>
     </q-tabs>
   </div>
@@ -114,6 +116,50 @@
 
   </div>
 
+  <div v-if="tab === 'importExport'">
+
+    <div class="q-pa-md q-gutter-sm">
+
+      <q-banner rounded style="border:1px solid orange">You can export your data in various formats and re-import them
+        from json. Please
+        note that it is not guaranteed that older exports can be imported with newer versions of the tabsets
+        extension.
+      </q-banner>
+
+      <div class="row q-pa-md">
+        <div class="col-3"><b>Export</b></div>
+        <div class="col-3">json or as bookmarks</div>
+        <div class="col-1"></div>
+        <div class="col-5">
+          <q-btn
+            @click="showExportDialog"
+            flat round dense icon="file_download" color="primary">
+            <q-tooltip>Export your tabsets</q-tooltip>
+          </q-btn>
+        </div>
+      </div>
+
+      <div class="row q-pa-md">
+        <div class="col-3"><b>Import</b></div>
+        <div class="col-3">
+          from json<br>
+          You might need to restart tabsets.
+        </div>
+        <div class="col-1"></div>
+        <div class="col-5">
+          <q-btn
+            @click="showImportDialog"
+            flat round dense icon="file_upload" color="primary">
+            <q-tooltip>Import your tabsets backup</q-tooltip>
+          </q-btn>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
   <div v-if="tab === 'featureToggles'">
     <FeatureToggleSettings/>
   </div>
@@ -139,6 +185,8 @@ import {
 import InfoLine from "pages/helper/InfoLine.vue";
 import FeatureToggleSettings from "pages/helper/FeatureToggleSettings.vue";
 import {useI18n} from "vue-i18n";
+import ExportDialog from "components/dialogues/ExportDialog.vue";
+import ImportDialog from "components/dialogues/ImportDialog.vue";
 
 const {t} = useI18n()
 
@@ -212,7 +260,10 @@ watchEffect(() => {
   LocalStorage.set("ui.tabSwitcher", autoSwitcherOption.value)
 })
 
-const simulateNewVersion = (version: string) => NavigationService.updateAvailable({version: version})
+// const simulateNewVersion = (version: string) => NavigationService.updateAvailable({version: version})
+
+const showExportDialog = () => $q.dialog({component: ExportDialog, componentProps: {inSidePanel: true}})
+const showImportDialog = () => $q.dialog({component: ImportDialog, componentProps: {inSidePanel: true}})
 
 const simulateStaticSuggestion = () => {
   const suggestions: [Suggestion] = [

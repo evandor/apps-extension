@@ -10,44 +10,17 @@
     <q-tooltip class="tooltip">{{ suggestionsLabel() }}</q-tooltip>
   </q-btn>
 
-  <q-btn
-         icon="o_view_list"
-         :size="props.size"
-         class="q-my-xs q-ml-xs q-mr-none q-px-xs"
-         flat>
-    <q-menu>
-      <q-list dense>
-        <!--        <q-item dense clickable v-close-popup>-->
-        <!--          <q-item-section>new window</q-item-section>-->
-        <!--        </q-item>-->
+  <SidePanelFooterLeftButton
+    :side-panel-view="SidePanelView.ENTITY_MANAGER"
+    :size="props.size"
+    icon="o_apps"
+    tooltip="Entity Manager"/>
 
-        <SidePanelFooterViewMenuItem :side-panel-view="SidePanelView.ENTITY_MANAGER"
-                                     label="Entity Manager"
-                                     icon="o_apps"
-                                     :size="buttonSize"
-                                     tooltip="Define your own Entities to manage"/>
-        <SidePanelFooterViewMenuItem :side-panel-view="SidePanelView.API_MANAGER"
-                                     label="API Manager"
-                                     icon="o_apps"
-                                     :size="buttonSize"
-                                     tooltip="Access APIs"/>
-
-        <!-- :disable="useUiStore().sidePanelActiveViewIs(SidePanelView.MAIN)" -->
-        <SidePanelFooterViewMenuItem :side-panel-view="SidePanelView.MAIN"
-                                     label="Default View"
-                                     icon=""
-                                     :size="buttonSize"
-                                     tooltip="Back to Default View"/>
-
-      </q-list>
-    </q-menu>
-  </q-btn>
-
-<!--  <SidePanelFooterLeftButton-->
-<!--    :side-panel-view="SidePanelView.TABS_LIST"-->
-<!--    :size="props.size"-->
-<!--    icon="o_playlist_add"-->
-<!--    tooltip="All your browser's open tabs"/>-->
+  <SidePanelFooterLeftButton
+    :side-panel-view="SidePanelView.API_MANAGER"
+    :size="props.size"
+    icon="o_api"
+    tooltip="API Manager"/>
 
   <SidePanelFooterLeftButton v-if="unreadMessagesCount > 0"
                              :side-panel-view="SidePanelView.MESSAGES"

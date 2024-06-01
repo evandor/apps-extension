@@ -91,7 +91,7 @@ const animateSettingsButton = ref<boolean>(false)
 
 onMounted(() => {
   if (useFeaturesStore().hasFeature(FeatureIdent.WINDOWS_MANAGEMENT)) {
-    windowRows.value = calcWindowRows()
+    // windowRows.value = calcWindowRows()
   }
 })
 

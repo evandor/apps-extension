@@ -46,6 +46,11 @@ const routes: RouteRecordRaw[] = [
     children: [{path: '', component: () => import('src/apps/pages/MainPanelEntityPage.vue')}],
   },
   {
+    path: '/mainpanel/entities/:entityId/views/table', // editorjs setup cannot toggle between readonly/write mode
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelEntitiesAsTablePage.vue')}],
+  },
+  {
     path: '/mainpanel/entities/:entityId/items',
     component: () => import('layouts/PlainLayout.vue'),
     children: [{path: '', component: () => import('src/apps/pages/MainPanelEntityItemPage.vue')}],
