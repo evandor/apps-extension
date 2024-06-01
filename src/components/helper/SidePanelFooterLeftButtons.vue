@@ -11,16 +11,16 @@
   </q-btn>
 
   <SidePanelFooterLeftButton
-    :side-panel-view="SidePanelView.ENTITY_MANAGER"
-    :size="props.size"
-    icon="o_apps"
-    tooltip="Entity Manager"/>
-
-  <SidePanelFooterLeftButton
     :side-panel-view="SidePanelView.API_MANAGER"
     :size="props.size"
     icon="o_api"
     tooltip="API Manager"/>
+
+  <SidePanelFooterLeftButton
+    :side-panel-view="SidePanelView.ENTITY_MANAGER"
+    :size="props.size"
+    icon="o_apps"
+    tooltip="Entity Manager"/>
 
   <SidePanelFooterLeftButton v-if="unreadMessagesCount > 0"
                              :side-panel-view="SidePanelView.MESSAGES"
