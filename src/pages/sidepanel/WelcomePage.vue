@@ -103,19 +103,17 @@
 
 <script lang="ts" setup>
 
-import {SidePanelView, useUiStore} from "src/stores/uiStore";
+import {SidePanelView, useUiStore} from "src/ui/stores/uiStore";
 import {onMounted, ref, UnwrapRef, watchEffect} from "vue";
 import {useRouter} from "vue-router";
 import {useCommandExecutor} from "src/core/services/CommandExecutor";
 import {STRIP_CHARS_IN_USER_INPUT, TITLE_IDENT} from "boot/constants";
 import Analytics from "src/utils/google-analytics";
-import DialogButton from "components/buttons/DialogButton.vue";
+import DialogButton from "src/core/dialog/buttons/DialogButton.vue";
 import {LocalStorage, openURL} from "quasar";
-import {AppFeatures} from "src/models/AppFeatures";
-import {GrantPermissionCommand} from "src/domain/commands/GrantPermissionCommand";
-import {usePermissionsStore} from "stores/permissionsStore";
+import {AppFeatures} from "src/app/models/AppFeatures";
 import {useI18n} from 'vue-i18n'
-import {FeatureIdent} from "src/models/FeatureIdent";
+import {FeatureIdent} from "src/app/models/FeatureIdent";
 import {useFeaturesStore} from "src/features/stores/featuresStore";
 
 const {t} = useI18n()
@@ -136,17 +134,17 @@ onMounted(() => {
   LocalStorage.set(TITLE_IDENT, 'Tabsets' + stageIdentifier())
 })
 
-watchEffect(async () => {
-  const feature = new AppFeatures().getFeature(FeatureIdent.NOTIFICATIONS)
-  if (activateNotifications.value && feature) {
-    const res = await useCommandExecutor().execute(new GrantPermissionCommand('notifications'))
-    if (!res.result) {
-      activateNotifications.value = false
-    }
-  } else if (!activateNotifications.value && feature) {
-    useFeaturesStore().deactivateFeature('notifications')
-  }
-})
+// watchEffect(async () => {
+//   const feature = new AppFeatures().getFeature(FeatureIdent.NOTIFICATIONS)
+//   if (activateNotifications.value && feature) {
+//     const res = await useCommandExecutor().execute(new GrantPermissionCommand('notifications'))
+//     if (!res.result) {
+//       activateNotifications.value = false
+//     }
+//   } else if (!activateNotifications.value && feature) {
+//     useFeaturesStore().deactivateFeature('notifications')
+//   }
+// })
 
 function setFeature(featureIdent: FeatureIdent, val: UnwrapRef<boolean>) {
   const feature = new AppFeatures().getFeature(featureIdent)

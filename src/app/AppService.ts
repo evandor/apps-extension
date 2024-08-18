@@ -1,5 +1,4 @@
-import {usePermissionsStore} from "stores/permissionsStore";
-import ChromeListeners from "src/services/ChromeListeners";
+import ChromeListeners from "src/app/listeners/BrowserListeners";
 import IndexedDbPersistenceService from "src/services/IndexedDbPersistenceService";
 import {useDB} from "src/services/usePersistenceService";
 import ChromeApi from "src/services/ChromeApi";
@@ -7,7 +6,7 @@ import {useSettingsStore} from "stores/settingsStore";
 import {Router} from "vue-router";
 import {useAppStore} from "stores/appStore";
 import PersistenceService from "src/services/PersistenceService";
-import {useUiStore} from "stores/uiStore";
+import {useUiStore} from "src/ui/stores/uiStore";
 import {useFeaturesStore} from "src/features/stores/featuresStore";
 import {useEntitiesStore} from "src/apps/stores/entitiesStore";
 import {useApisStore} from "src/apps/stores/apisStore";
@@ -42,7 +41,6 @@ class AppService {
     appStore.init()
 
     // init of stores and some listeners
-    await usePermissionsStore().initialize(useDB(quasar).localDb)
     await ChromeListeners.initListeners()
 
     settingsStore.initialize(quasar.localStorage);

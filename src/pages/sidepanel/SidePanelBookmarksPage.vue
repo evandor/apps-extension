@@ -32,7 +32,7 @@
 import FirstToolbarHelper from "pages/sidepanel/helper/FirstToolbarHelper.vue";
 import {onMounted, ref} from "vue";
 import Analytics from "src/utils/google-analytics";
-import {usePermissionsStore} from "stores/permissionsStore";
+import {useFeaturesStore} from "src/features/stores/featuresStore";
 
 const showOnlyFolders = ref(true)
 
@@ -46,10 +46,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   //   return true
   // }
   if (message.name === 'feature-activated') {
-    usePermissionsStore().addActivateFeature(message.data.feature)
+    useFeaturesStore().activateFeature(message.data.feature)
   }
   else if (message.name === 'feature-deactivated') {
-    usePermissionsStore().removeActivateFeature(message.data.feature)
+    useFeaturesStore().deactivateFeature(message.data.feature)
   }
 })
 

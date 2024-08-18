@@ -36,7 +36,7 @@
 <script lang="ts" setup>
 import {ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
-import {DrawerTabs, useUiStore} from "src/stores/uiStore";
+import {DrawerTabs, useUiStore} from "src/ui/stores/uiStore";
 import Features from "src/features/components/Features.vue";
 
 const route = useRoute()

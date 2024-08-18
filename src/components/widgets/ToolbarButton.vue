@@ -27,11 +27,8 @@
 </template>
 
 <script lang="ts" setup>
-import {DrawerTabs, useUiStore} from "src/stores/uiStore";
-import {usePermissionsStore} from "src/stores/permissionsStore";
-import {FeatureIdent} from "src/models/AppFeature";
-
-const permissionsStore = usePermissionsStore()
+import {DrawerTabs, useUiStore} from "src/ui/stores/uiStore";
+import {FeatureIdent} from "src/app/models/AppFeature";
 
 const props = defineProps({
   feature: {type: String, required: false},

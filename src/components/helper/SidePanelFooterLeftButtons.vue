@@ -11,19 +11,19 @@
   </q-btn>
 
   <SidePanelFooterLeftButton
-    :side-panel-view="SidePanelView.API_MANAGER"
+    :side-panel-view="SidePanelViews.API_MANAGER"
     :size="props.size"
     icon="o_api"
     tooltip="API Manager"/>
 
   <SidePanelFooterLeftButton
-    :side-panel-view="SidePanelView.ENTITY_MANAGER"
+    :side-panel-view="SidePanelViews.ENTITY_MANAGER"
     :size="props.size"
     icon="o_apps"
     tooltip="Entity Manager"/>
 
   <SidePanelFooterLeftButton v-if="unreadMessagesCount > 0"
-                             :side-panel-view="SidePanelView.MESSAGES"
+                             :side-panel-view="SidePanelViews.MESSAGES"
                              icon="o_chat"
                              :size="props.size"
                              tooltip="Your messages">
@@ -32,13 +32,12 @@
 
 </template>
 <script setup lang="ts">
-import {SidePanel, SidePanelView, useUiStore} from "stores/uiStore";
-import SidePanelFooterLeftButton from "components/helper/SidePanelFooterLeftButton.vue";
-import {usePermissionsStore} from "stores/permissionsStore";
+import {useUiStore} from "src/ui/stores/uiStore";
 import {useSuggestionsStore} from "stores/suggestionsStore";
 import {ref, watchEffect} from "vue";
 import {SuggestionState} from "src/models/Suggestion";
-import SidePanelFooterViewMenuItem from "components/helper/SidePanelFooterViewMenuItem.vue";
+import {SidePanelViews} from "src/models/SidePanelViews";
+import SidePanelFooterLeftButton from "src/ui/components/SidePanelFooterLeftButton.vue";
 
 const props = defineProps({
   showSuggestionIcon: {type: Boolean, required: true},

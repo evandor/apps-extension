@@ -1,6 +1,6 @@
 import _ from "lodash"
 import {Feature} from "src/features/models/Feature";
-import {FeatureIdent, FeatureType} from "src/models/FeatureIdent";
+import {FeatureIdent, FeatureType} from "src/app/models/FeatureIdent";
 
 export class AppFeatures {
   features: Feature[] = [

@@ -169,9 +169,7 @@
 <script setup lang="ts">
 import {onMounted, ref, watch, watchEffect} from "vue";
 import {LocalStorage, useQuasar} from "quasar";
-import NavigationService from "src/services/NavigationService";
-import {DrawerTabs, ListDetailLevel, useUiStore} from "src/stores/uiStore";
-import {usePermissionsStore} from "src/stores/permissionsStore";
+import {DrawerTabs, ListDetailLevel, useUiStore} from "src/ui/stores/uiStore";
 import {useSettingsStore} from "src/stores/settingsStore"
 import OpenRightDrawerWidget from "components/widgets/OpenRightDrawerWidget.vue";
 import Analytics from "src/utils/google-analytics";
@@ -226,9 +224,6 @@ onMounted(() => {
 })
 
 let suggestionsCounter = 0
-
-watchEffect(() => permissionsList.value = usePermissionsStore().permissions?.permissions || [])
-
 
 watchEffect(() => {
   //console.log("***setting dark mode to ", typeof darkMode.value, darkMode.value)

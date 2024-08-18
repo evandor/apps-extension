@@ -1,5 +1,6 @@
 import {useUtils} from "src/core/services/Utils";
-import {SidePanelView, useUiStore} from "stores/uiStore";
+import {useUiStore} from "src/ui/stores/uiStore";
+import {SidePanelViews} from "src/models/SidePanelViews";
 
 const {inBexMode} = useUtils()
 
@@ -13,7 +14,7 @@ function inIgnoredMessages(request: any) {
 }
 
 
-class ChromeListeners {
+class BrowserListeners {
 
   inProgress = false;
 
@@ -57,7 +58,7 @@ class ChromeListeners {
     if (request.msg === 'captureThumbnail') {
     } else if (request.msg === 'html2text') {
     } else if (request.name === 'sidepanel-switch-view') {
-      useUiStore().sidePanelSetActiveView(SidePanelView.MAIN)
+      useUiStore().sidePanelSetActiveView(SidePanelViews.MAIN)
     } else {
       console.log("got unknown message", request)
     }
@@ -66,5 +67,5 @@ class ChromeListeners {
 
 }
 
-export default new ChromeListeners();
+export default new BrowserListeners();
 

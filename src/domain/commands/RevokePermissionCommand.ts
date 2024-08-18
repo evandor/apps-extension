@@ -1,7 +1,5 @@
 import Command from "src/core/domain/Command";
 import {ExecutionResult} from "src/core/domain/ExecutionResult";
-import {usePermissionsStore} from "src/stores/permissionsStore";
-import {GrantPermissionCommand} from "src/domain/commands/GrantPermissionCommand";
 
 class UndoCommand implements Command<boolean> {
 

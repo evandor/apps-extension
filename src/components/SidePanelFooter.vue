@@ -65,7 +65,7 @@
   </q-footer>
 </template>
 <script setup lang="ts">
-import {SidePanelView, useUiStore} from "src/stores/uiStore";
+import {SidePanelView, useUiStore} from "src/ui/stores/uiStore";
 import {onMounted, ref, watch, watchEffect} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import NavigationService from "src/services/NavigationService";
@@ -73,7 +73,7 @@ import {openURL, uid, useQuasar} from "quasar";
 import {ToastType} from "src/models/Toast";
 import SidePanelFooterLeftButtons from "components/helper/SidePanelFooterLeftButtons.vue";
 import {useFeaturesStore} from "src/features/stores/featuresStore";
-import {FeatureIdent} from "src/models/FeatureIdent";
+import {FeatureIdent} from "src/app/models/FeatureIdent";
 
 const $q = useQuasar()
 

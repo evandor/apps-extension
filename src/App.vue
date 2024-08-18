@@ -5,8 +5,8 @@
 <script setup lang="ts">
 
 import {setCssVar, useQuasar} from "quasar";
-import AppService from "src/services/AppService";
 import {useRouter} from "vue-router";
+import AppService from "src/app/AppService";
 
 const $q = useQuasar()
 const router = useRouter()
