@@ -31,6 +31,26 @@ const routes: RouteRecordRaw[] = [
     children: [{path: '', component: () => import('src/features/pages/FeaturesPage.vue')}],
   },
   {
+    path: '/sidepanel/mdManager',
+    component: () => import('layouts/SidePanelLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/SidePanelMasterDataPage.vue')}],
+  },
+  {
+    path: '/mainpanel/md/:mdId', // editorjs setup cannot toggle between readonly/write mode
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelMasterDataPage.vue')}],
+  },
+  {
+    path: '/mainpanel/md/:mdId/items',
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelMasterDataItemPage.vue')}],
+  },
+  {
+    path: '/mainpanel/md/:mdId/items/:itemId',
+    component: () => import('layouts/PlainLayout.vue'),
+    children: [{path: '', component: () => import('src/apps/pages/MainPanelMasterDataItemPage.vue')}],
+  },
+  {
     path: '/sidepanel/entityManager',
     component: () => import('layouts/SidePanelLayout.vue'),
     children: [{path: '', component: () => import('src/apps/pages/SidePanelEntitiesPage.vue')}],
@@ -54,11 +74,6 @@ const routes: RouteRecordRaw[] = [
     path: '/mainpanel/entities/:entityId/items',
     component: () => import('layouts/PlainLayout.vue'),
     children: [{path: '', component: () => import('src/apps/pages/MainPanelEntityItemPage.vue')}],
-  },
-  {
-    path: '/mainpanel/entities/:entityId',
-    component: () => import('layouts/PlainLayout.vue'),
-    children: [{path: '', component: () => import('src/apps/pages/MainPanelEntityPage.vue')}],
   },
   {
     path: '/mainpanel/entities/:entityId/items/:itemId',

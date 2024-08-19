@@ -22,6 +22,12 @@
     icon="o_apps"
     tooltip="Entity Manager"/>
 
+  <SidePanelFooterLeftButton
+    :side-panel-view="SidePanelViews.MASTER_DATA_MANAGER"
+    :size="props.size"
+    icon="o_dataset"
+    tooltip="Master Data Manager"/>
+
   <SidePanelFooterLeftButton v-if="unreadMessagesCount > 0"
                              :side-panel-view="SidePanelViews.MESSAGES"
                              icon="o_chat"

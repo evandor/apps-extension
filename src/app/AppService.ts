@@ -10,6 +10,7 @@ import {useUiStore} from "src/ui/stores/uiStore";
 import {useFeaturesStore} from "src/features/stores/featuresStore";
 import {useEntitiesStore} from "src/apps/stores/entitiesStore";
 import {useApisStore} from "src/apps/stores/apisStore";
+import {useMasterDataStore} from "src/apps/stores/masterDataStore";
 
 class AppService {
 
@@ -64,6 +65,7 @@ class AppService {
      */
     await useFeaturesStore().initialize(useDB(quasar).featuresLocalStorage)
 
+    await useMasterDataStore().initialize(useDB().indexedDbAppsPersistence)
     await useEntitiesStore().initialize(useDB().indexedDbAppsPersistence)
     await useApisStore().initialize(useDB().indexedDbAppsPersistence)
 

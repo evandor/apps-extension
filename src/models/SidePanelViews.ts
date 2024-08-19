@@ -15,6 +15,7 @@ export class SidePanelViews {
 
   static readonly MESSAGES = new SidePanelViews('messages', '/sidepanel/messages')
 
+  static readonly MASTER_DATA_MANAGER = new SidePanelViews('mdManager','sidepanel/mdManager')
   static readonly ENTITY_MANAGER = new SidePanelViews('entityManager','sidepanel/entityManager')
   static readonly API_MANAGER = new SidePanelViews('apiManager','sidepanel/apiManager')
 
